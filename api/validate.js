@@ -4,13 +4,16 @@ export default async function handler(req, res) {
   const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
-    'https://idea-validator.vercel.app',
-    'https://idea-validator-git-main-thekhozachain.vercel.app',
-    // Add your production domain here
+    'https://idea-validator-kappa.vercel.app',
+    'https://idea-validator-git-main-siphos-projects-12c71fff.vercel.app',
   ];
 
+  // Allow all Vercel preview deployments for this project
+  const isVercelPreview = req.headers.origin?.includes('idea-validator') &&
+                          req.headers.origin?.includes('vercel.app');
+
   const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
+  if (allowedOrigins.includes(origin) || isVercelPreview) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
 
